@@ -9,6 +9,8 @@ from datetime import datetime
 
 from moviepy.editor import VideoFileClip
 
+from utils import u_file
+
 
 def compress_video(
         input_path,
@@ -72,6 +74,26 @@ def is_support_video(filepath) -> str:
 
 def format_file_path(filepath) -> str:
     return (filepath or "").replace(os.sep, "/")
+
+
+def check_video_file(file_obj) -> str:
+    """
+    check whether the file meet the requirements
+    :param file_obj:
+    :return:
+    """
+    suffix_str = 'mp4、avi'
+    if not file_obj:
+        return f"Please upload the file with the suffix {suffix_str}"
+
+    filename = file_obj.name or ''
+    if not is_support_video(filename):
+        return f"Please upload the file with the suffix {suffix_str}"
+
+    if not u_file.exists(filename):
+        return "During file upload, please wait for the file to be uploaded before operating"
+
+    return None
 
 
 def _test():

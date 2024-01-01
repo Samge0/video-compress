@@ -17,5 +17,6 @@ class ExtendedEnum(Enum):
 
 
 class AudioFormatEnum(ExtendedEnum):
+    none = ""
     wav = "wav"
     mp3 = "mp3"

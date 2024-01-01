@@ -17,30 +17,16 @@ create a cache mapping directory
 mkdir -p ~/docker_data/video-compress/gradio_cache
 ```
 
-running docker
+Using docker, if you want to compress the video according to the file path, you need to map the file path where the video is located to docker, and then use `/app/VideoDir/xxx` to operate the video file.
 
-If the `ACCESS_TOKEN` environment variable and `config.json` are configured at the same time, the value of the environment variable `ACCESS_TOKEN` is read first.
+Otherwise, a single video file compression operation may be performed in the manner of uploading a file.
 
-Method 1: Run by configuring `ACCESS_TOKEN` environment variables
+
 ```shell
 docker run -d \
 --name video-compress-gradio \
--e ACCESS_TOKEN=xxx \
 -v ~/docker_data/video-compress/gradio_cache:/app/gradio_cache \
--p 7860:7860 \
---pull=always \
---restart always \
-samge/video-compress-gradio:latest
-```
-
-Method 2: Run as `config.json` mapping
-
-Here `~/docker_data/video-compress/config.json` needs to be replaced with the user's local mapping path.
-```shell
-docker run -d \
---name video-compress-gradio \
--v ~/docker_data/video-compress/config.json:/app/config.json \
--v ~/docker_data/video-compress/gradio_cache:/app/gradio_cache \
+-v ~/docker_data/VideoDir:/app/VideoDir \
 -p 7860:7860 \
 --pull=always \
 --restart always \

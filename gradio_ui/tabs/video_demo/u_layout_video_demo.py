@@ -13,9 +13,10 @@ def create_layout():
     """ build layout """
     with gr.Row().style(equal_height=True):
         with gr.Column(scale=1):
-            input_path_single = gr.Textbox(show_label=True, label="InputPath", placeholder="[SINGLE] Please enter the video path to be compressed", lines=1, max_lines=1)
-            input_dir = gr.Textbox(show_label=True, label="InputDir", placeholder="[BATCH] Please enter the video dir to be compressed", lines=1, max_lines=1)
-            output_path = gr.Textbox(show_label=True, label="OutputDir", placeholder="[OPTIONAL] Please enter the video output dir", lines=1, max_lines=1)
+            video_file = gr.File(label="uploadVideo", type="file", file_types=[".mp4", ".avi"], interactive=True)
+            input_path_single = gr.Textbox(show_label=True, label="InputPath", placeholder="[SINGLE] Please enter the video path to be compressed, e.g: /app/VideoDir/xxx/xx.mp4", lines=1, max_lines=1)
+            input_dir = gr.Textbox(show_label=True, label="InputDir", placeholder="[BATCH] Please enter the video dir to be compressed, e.g: /app/VideoDir/xxx", lines=1, max_lines=1)
+            output_path = gr.Textbox(show_label=True, label="OutputDir", placeholder="[OPTIONAL] Please enter the video output dir, e.g: /app/VideoDir", lines=1, max_lines=1)
             with gr.Row().style(equal_height=True):
                 target_bitrate = gr.components.Dropdown(
                     choices=[f"{i}M" for i in range(1, 11)],
@@ -38,5 +39,10 @@ def create_layout():
                 lines=20,
                 max_lines=20
             )
-    button.click(u_handler_video_demo.handler, inputs=[input_path_single, input_dir, output_path, target_bitrate, audio_separation_format, without_audio], outputs=[result])
-    button_load.click(u_handler_video_demo.load, inputs=[], outputs=[input_path_single, input_dir, output_path, target_bitrate, audio_separation_format, without_audio])
+            download_file = gr.Files(label="resultVideo", file_count="multiple")
+    inputs = [video_file, input_path_single, input_dir, output_path, target_bitrate, audio_separation_format, without_audio]
+    outputs = [result, download_file]
+    button.click(u_handler_video_demo.handler, inputs=inputs, outputs=outputs)
+
+    outputs_load = [input_path_single, input_dir, output_path, target_bitrate, audio_separation_format, without_audio]
+    button_load.click(u_handler_video_demo.load, inputs=[], outputs=outputs_load)
