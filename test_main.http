@@ -1,0 +1,20 @@
+### test video-upload
+
+POST http://{{host}}:{{port}}/api/video/upload
+Content-Type: multipart/form-data
+Authorization: Bearer {{access_token}}
+
+{
+  "file": "here choose the video file"
+}
+
+
+### test video-compress
+
+POST http://{{host}}:{{port}}/api/video/compress
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "input_path_single": "/xxx/video/upload/xxx.mp4"
+}
