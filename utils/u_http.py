@@ -3,6 +3,7 @@
 # author：samge
 # data：2023-02-28 14:56
 # describe：
+from fastapi import HTTPException
 
 
 def common_response(code, data, msg) -> dict:
@@ -36,7 +37,7 @@ def fail400(msg: str = 'Parameter error') -> dict:
 
 def fail403(msg: str = 'Permission verification failed') -> dict:
     """ Permission verification failed """
-    return common_response(403, None, msg)
+    raise HTTPException(status_code=403, detail=msg)
 
 
 def fail500(msg: str = 'Service exception, please try again later') -> dict:
